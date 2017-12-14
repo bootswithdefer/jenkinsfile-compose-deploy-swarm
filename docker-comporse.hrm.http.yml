@@ -1,0 +1,30 @@
+version: "3.1"
+
+services:
+    redis:
+      image: redis:3.0.7
+      hostname: redis
+      networks:
+        - back-end
+      deploy:
+        mode: replicated
+        replicas: 1
+    session-example:
+      image: ahromis/session-example:0.1
+      ports:
+        - 8080
+      networks:
+        - back-end
+        - ucp-hrm
+      deploy:
+        mode: replicated
+        replicas: 5
+        labels:
+          - com.docker.ucp.mesh.http.8080=external_route=http://${DOMAIN},internal_port=8080
+
+networks:
+  back-end:
+    driver: overlay
+  ucp-hrm:
+    external:
+      name: ucp-hrm

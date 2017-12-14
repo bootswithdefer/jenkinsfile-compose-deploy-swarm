@@ -22,7 +22,8 @@ pipeline {
               sh """export DOCKER_HOST=tcp://10.120.120.70:443
                     export DOCKER_TLS_VERIFY=1
                     docker version
-                    docker-compose version"""
+                    export DOMAIN="test.domain"
+                    docker stack deploy -c docker-compose.hrm.http.yml hrm-http-example"""
           }
         }
       }
