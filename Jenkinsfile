@@ -19,10 +19,10 @@ pipeline {
         script {
           withCredentials([dockerCert(variable: 'DOCKER_CERT_PATH',
                                       credentialsId: 'ucp_jenkins_sandbox')]) {
-              sh """export DOCKER_HOST=tcp://10.120.120.70:443
+              sh """export DOCKER_HOST=tcp://ucp.sandbox.asu.edu:443
                     export DOCKER_TLS_VERIFY=1
                     docker version
-                    export DOMAIN="test.domain"
+                    export DOMAIN="hrm-http-example.sandbox.asu.edu"
                     docker stack deploy -c docker-compose.hrm.http.yml hrm-http-example"""
           }
         }
