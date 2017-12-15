@@ -22,9 +22,9 @@ pipeline {
       steps {
         script {
           sh "docker pull hello-world"
-          sh "docker tag hello-world dtr.sandbox.asu.edu/admin/hello-world"
+          sh "docker tag hello-world dtr.sandbox.asu.edu/jenkins/hello-world"
           sh "docker login --username=${env.SANDBOX_REG_USR} --password=${env.SANDBOX_REG_PSW} dtr.sandbox.asu.edu"
-          sh "docker push dtr.sandbox.asu.edu/admin/hello-world"
+          sh "docker push dtr.sandbox.asu.edu/jenkins/hello-world"
         }
       }
     }
