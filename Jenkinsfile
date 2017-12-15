@@ -8,12 +8,26 @@ pipeline {
       reuseNode true
     }
   }
+
+  environment {
+    SANDBOX_REG = credentials("dtr_sandbox_jenkins")
+  }
   
   options {
     buildDiscarder(logRotator(numToKeepStr: '20'))
   }
 
   stages {
+    stage('Build') {
+      steps {
+        script {
+          sh "docker pull hello-world"
+          sh "docker tag hello-world dtr.sandbox.asu.edu/admin/hello-world"
+          sh "docker login --username=${env.SANDBOX_REG_USR} --password=${env.SANDBOX_REG_PSW} dtr.sandbox.asu.edu"
+          sh "docker push dtr.sandbox.asu.edu/admin/hello-world"
+        }
+      }
+    }
     stage('Deploy') {
       steps {
         script {
